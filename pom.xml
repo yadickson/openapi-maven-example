@@ -296,7 +296,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <finalName>ms-${api.name}-api-cl-${api.version}</finalName>
+                    <finalName>${api.name}-${api.version}</finalName>
                 </configuration>
             </plugin>
 

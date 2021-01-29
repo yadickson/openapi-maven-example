@@ -1,0 +1,148 @@
+openapi: '3.0.2'
+info:
+  title: HelloWorld
+  description: Micro Service
+  termsOfService: OpenApi
+  contact:
+    name: 'yadickson'
+    url: 'https://github.com/yadickson/openapi-maven-example/'
+  version: 1.0.0
+  x-role: role
+servers:
+  - url: /v1
+paths:
+  /definitions:
+    get:
+      summary: Get definitios.
+      operationId: getDefinitions
+      tags:
+        - Definitions
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: Response successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefinitionsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Create a definition
+      operationId: createDefinition
+      tags:
+        - Definitions
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: Response successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefinitionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DefinitionRequest'
+
+components:
+  securitySchemes:
+    JWT:
+      type: oauth2
+      description: Client Credential
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth/token
+          scopes: {}
+  schemas:
+
+    DefinitionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/Definitions'
+
+    Definitions:
+      type: array
+      items:
+        $ref: '#/components/schemas/Definition'
+
+    Definition:
+      allOf:
+        - type: object
+          description: Full definition information.
+          properties:
+            id:
+              type: string
+              example: '01'
+              description: Identification.
+        - $ref: '#/components/schemas/DefinitionBody'
+
+    DefinitionBody:
+      type: object
+      description: The definition information.
+      properties:
+        name:
+          type: string
+          example: 'name'
+          description: Name.
+        description:
+          type: string
+          example: 'description'
+          description: Description.
+
+    DefinitionRequest:
+      allOf:
+        - $ref: '#/components/schemas/DefinitionBody'
+
+    DefinitionResponse:
+      allOf:
+        - $ref: '#/components/schemas/Definition'
+
+    Notification:
+      required:
+        - code
+        - message
+        - timestamp
+      type: object
+      properties:
+        code:
+          description: Http code.
+          type: string
+          example: '400'
+        message:
+          description: Message.
+          type: string
+          example: Something is wrong
+        timestamp:
+          description: Timestamp of the notification.
+          type: string
+          format: date-time
+          example: '2017-10-12T20:38:45.408Z'
+
+    ErrorResponse:
+      allOf:
+        - $ref: '#/components/schemas/Notification'
+
+  responses:
+    BadRequest:
+      description: Bad Request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

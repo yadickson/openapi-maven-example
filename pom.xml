@@ -249,7 +249,7 @@
                             <configOptions>
                                 <sourceFolder>src/main/java</sourceFolder>
                                 <java8>false</java8>
-                                <dateLibrary>threetenbp</dateLibrary>
+                                <dateLibrary>java8</dateLibrary>
                                 <bigDecimalAsString>true</bigDecimalAsString>
                                 <useOptional>false</useOptional>
                                 <library>resttemplate</library>
@@ -275,7 +275,7 @@
                             <configOptions>
                                 <sourceFolder>src/main/java</sourceFolder>
                                 <java8>false</java8>
-                                <dateLibrary>threetenbp</dateLibrary>
+                                <dateLibrary>java8</dateLibrary>
                                 <delegatePattern>true</delegatePattern>
                                 <bigDecimalAsString>true</bigDecimalAsString>
                                 <useOptional>false</useOptional>
